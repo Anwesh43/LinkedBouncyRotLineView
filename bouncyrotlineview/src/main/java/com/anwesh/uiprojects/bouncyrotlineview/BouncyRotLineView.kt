@@ -203,4 +203,13 @@ class BouncyRotLineView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+
+        fun create(activity : Activity) : BouncyRotLineView {
+            val view : BouncyRotLineView = BouncyRotLineView(activity)
+            activity.setContentView(view)
+            return view
+        }
+    }
 }
