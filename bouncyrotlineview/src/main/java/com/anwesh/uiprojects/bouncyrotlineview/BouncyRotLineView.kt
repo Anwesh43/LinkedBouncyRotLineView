@@ -140,6 +140,10 @@ class BouncyRotLineView(ctx : Context) : View(ctx) {
             state.update(cb)
         }
 
+        fun startUpdating(cb : () -> Unit) {
+            state.startUpdating(cb)
+        }
+
         fun getNext(dir : Int, cb : () -> Unit) : BRLNode {
             var curr : BRLNode? = prev
             if (dir == 1) {
@@ -150,6 +154,30 @@ class BouncyRotLineView(ctx : Context) : View(ctx) {
             }
             cb()
             return this
+        }
+    }
+
+    data class BouncyRotLine(var i : Int) {
+
+        private val root : BRLNode = BRLNode(0)
+        private var curr : BRLNode = root
+        private var dir : Int = 1
+
+        fun draw(canvas : Canvas, paint : Paint) {
+            root.draw(canvas, paint)
+        }
+
+        fun update(cb : (Float) -> Unit) {
+            curr.update {
+                curr = curr.getNext(dir) {
+                    dir *= -1
+                }
+                cb(it)
+            }
+        }
+
+        fun startUpdating(cb : () -> Unit) {
+            curr.startUpdating(cb)
         }
     }
 }
