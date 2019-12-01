@@ -14,7 +14,7 @@ import android.graphics.Color
 
 val nodes : Int = 5
 val lines : Int = 4
-val scGap : Float = 0.02f
+val scGap : Float = 0.01f
 val strokeFactor : Int = 90
 val foreColor : Int = Color.parseColor("#283593")
 val backColor : Int = Color.parseColor("#BDBDBD")
@@ -43,6 +43,8 @@ fun Canvas.drawBRLNode(i : Int, scale : Float, paint : Paint) {
     val gap : Float = w / (nodes + 1)
     val size : Float = gap / sizeFactor
     paint.color = foreColor
+    paint.strokeCap = Paint.Cap.ROUND
+    paint.strokeWidth = Math.min(w, h) / strokeFactor
     save()
     translate(gap * (i + 1), h / 2)
     val ij : Int = Math.floor((lines) * scale.toDouble()).toInt()
