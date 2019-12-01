@@ -180,4 +180,26 @@ class BouncyRotLineView(ctx : Context) : View(ctx) {
             curr.startUpdating(cb)
         }
     }
+
+    data class Renderer(var view : BouncyRotLineView) {
+
+        private val animator : Animator = Animator(view)
+        private val brl : BouncyRotLine = BouncyRotLine(0)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(backColor)
+            brl.draw(canvas, paint)
+            animator.animate {
+                brl.update {
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            brl.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
